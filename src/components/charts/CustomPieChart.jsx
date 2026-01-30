@@ -8,9 +8,13 @@ import {
   Legend,
 } from "recharts";
 
-const CustomPieChart = ({ data, label, colors }) => {
+// Components
+import CustomToopTip from "./CustomToopTip";
+import CustomLegend from "./CustomLegend";
+
+const CustomPieChart = ({ data, colors }) => {
   return (
-    <ResponsiveContainer>
+    <ResponsiveContainer width="100%" height={300}>
       <PieChart>
         <Pie
           data={data}
@@ -18,16 +22,19 @@ const CustomPieChart = ({ data, label, colors }) => {
           nameKey="status"
           cx="50%"
           cy="50%"
-          outerRadius={130}
-          innerRadius={100}
+          outerRadius={120}
+          innerRadius={90}
           labelLine={false}
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+            <Cell
+              key={`cell-${index}`}
+              fill={colors?.[index % colors.length]}
+            />
           ))}
         </Pie>
-        <Tooltip />
-        <Legend />
+        <Tooltip content={<CustomToopTip />} />
+        <Legend content={<CustomLegend />} />
       </PieChart>
     </ResponsiveContainer>
   );

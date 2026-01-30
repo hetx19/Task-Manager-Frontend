@@ -12,6 +12,7 @@ import { UserContext } from "../../context/userContext";
 
 // Components
 import DashboardLayout from "../../components/layout/DashboardLayout";
+import CustomBarGraph from "../../components/charts/CustomBarGraph";
 import CustomPieChart from "../../components/charts/CustomPieChart";
 import TaskListTable from "../../components/TaskListTable";
 import InfoCard from "../../components/card/InfoCard";
@@ -32,11 +33,11 @@ const AdminDashboardPage = () => {
 
   const [adminDashboardData, setAdminDashboardData] = useState(null);
   const [pieChartData, setPieChartData] = useState([]);
-  const [barChartData, setBarChartData] = useState([]);
+  const [barGraphData, setBarGraphData] = useState([]);
 
-  const genrateChartData = (data) => {
+  const generateChartData = (data) => {
     const taskDistribution = data?.taskDistribution || null;
-    const taskPriorityLevel = data?.taskPriorityLevels || null;
+    const taskPriorityLevels = data?.taskPriorityLevels || null;
 
     const taskDistributionData = [
       { status: "Pending", count: taskDistribution?.Pending || 0 },
@@ -47,23 +48,23 @@ const AdminDashboardPage = () => {
     setPieChartData(taskDistributionData);
 
     const priorityLevelData = [
-      { status: "Low", count: taskPriorityLevel?.Low || 0 },
-      { status: "Medium", count: taskPriorityLevel?.Medium || 0 },
-      { status: "High", count: taskPriorityLevel?.High || 0 },
+      { priority: "Low", count: taskPriorityLevels?.Low || 0 },
+      { priority: "Medium", count: taskPriorityLevels?.Medium || 0 },
+      { priority: "High", count: taskPriorityLevels?.High || 0 },
     ];
 
-    setBarChartData(priorityLevelData);
+    setBarGraphData(priorityLevelData);
   };
 
   const getAdminDashBoardData = async () => {
     try {
-      const responce = await axiosInst.get(
+      const response = await axiosInst.get(
         API_ENDPOINT.TASKS.GET_DASHBOARD_DATA,
       );
 
-      if (responce.data) {
-        setAdminDashboardData(responce.data);
-        genrateChartData(responce.data?.charts || null);
+      if (response.data) {
+        setAdminDashboardData(response.data);
+        generateChartData(response.data?.charts || null);
       }
     } catch (error) {
       console.error("User fetching error: ", error);
@@ -80,13 +81,14 @@ const AdminDashboardPage = () => {
     return () => {};
   }, []);
 
+  console.log(barGraphData);
   return (
     <DashboardLayout activeMenu="Dashboard">
       <div className="card my-5">
         <div>
           <div className="col-span-3">
             <h2 className="text-xl md:text-2xl">
-              Good Morining! {user?.name || ""}
+              Good Morning! {user?.name || ""}
             </h2>
             <p className="text-xs md:text-[13px] text-gray-400 mt-1.5">
               {moment().format("dddd Do MMM YYYY")}
@@ -134,12 +136,16 @@ const AdminDashboardPage = () => {
           <div className="card">
             <div className="flex items-center justify-between">
               <h5 className="text-medium">Task Distribution</h5>
-              <CustomPieChart
-                data={pieChartData}
-                label="Total Balance"
-                colors={COLORS}
-              />
             </div>
+            <CustomPieChart data={pieChartData} colors={COLORS} />
+          </div>
+        </div>
+        <div>
+          <div className="card">
+            <div className="flex items-center justify-between">
+              <h5 className="text-medium">Task Priority Levels</h5>
+            </div>
+            <CustomBarGraph data={barGraphData} />
           </div>
         </div>
         <div className="md:col-span-2">
