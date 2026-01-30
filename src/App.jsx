@@ -29,6 +29,9 @@ import UserDashboardPage from "./pages/User/Dashboard";
 import MyTasksPage from "./pages/User/MyTasks";
 import ViewTaskDetailsPage from "./pages/User/ViewTaskDetails";
 
+// Update page
+import UpdateUserPage from "./pages/Update";
+
 const App = () => {
   const [progress, setProgress] = React.useState(0);
 
@@ -51,6 +54,7 @@ const App = () => {
               path="/signup"
               element={<SignUpPage setProgress={setProgress} />}
             />
+            <Route path="/update" element={<UpdateUserPage />} />
 
             {/* Admin Routes */}
             <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
