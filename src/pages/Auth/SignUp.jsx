@@ -57,7 +57,7 @@ const SignUpPage = ({ setProgress }) => {
       return;
     }
 
-    if (!confirmPassword || confirmPassword != password) {
+    if (!confirmPassword || confirmPassword !== password) {
       setProgress(100);
       setLoading(false);
       setError("Please verify the password");
@@ -157,7 +157,7 @@ const SignUpPage = ({ setProgress }) => {
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
           <button disabled={loading} type="submit" className="btn-primary">
-            SignUp
+            Sign Up
           </button>
 
           <p className="text-[13px] text-slate-800 mt-3">

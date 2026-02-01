@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Toaster } from "react-hot-toast";
 import LoadingBar from "react-top-loading-bar";
 import {
   BrowserRouter as Router,
@@ -76,6 +77,7 @@ const App = () => {
           </Routes>
         </Router>
       </div>
+      <Toaster toastOptions={{ className: "", style: { font: "13px" } }} />
     </UserProvider>
   );
 };

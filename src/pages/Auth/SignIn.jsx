@@ -62,9 +62,9 @@ const SignInPage = ({ setProgress }) => {
 
         navigate(role === "admin" ? "/admin/dashboard" : "/user/dashboard");
       }
-    } catch (error) {
-      if (error.response && error.response.data.message) {
-        setError(error.response.data.message);
+    } catch (err) {
+      if (err.response && err.response.data.message) {
+        setError(err.response.data.message);
       } else {
         setError("Something went wrong, try again");
       }
@@ -88,7 +88,7 @@ const SignInPage = ({ setProgress }) => {
             onChange={({ target }) => setEmail(target.value)}
             label="Email Address"
             placeholder="john@example.com"
-            type="text"
+            type="email"
           />
           <Input
             value={password}

@@ -18,23 +18,30 @@ axiosInst.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 axiosInst.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      if (error.response.status === 401) {
+      const { status } = error.response;
+      const requestUrl = error.config?.url || "";
+
+      if (status === 401 && !requestUrl.includes("/signin")) {
+        localStorage.removeItem("token");
         window.location.href = "/signin";
-      } else if (error.response.status === 500) {
+      }
+
+      if (status === 500) {
         console.error("Server error. Please try again");
       }
     } else if (error.code === "ECONNABORTED") {
       console.error("Request timeout. Try again");
     }
+
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInst;

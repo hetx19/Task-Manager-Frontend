@@ -1,7 +1,6 @@
-import axiosInst from "./axios";
-
 // Utils
 import { API_ENDPOINT } from "./api";
+import axiosInst from "./axios";
 
 export const uploadImage = async (imageFile) => {
   const formData = new FormData();
@@ -13,11 +12,11 @@ export const uploadImage = async (imageFile) => {
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
-      }
+      },
     );
     return responce.data;
   } catch (error) {
-    console.error("Error uploading the image", error);
+    console.error("Error Uploading The Image", error);
     throw error;
   }
 };
@@ -32,11 +31,11 @@ export const updateImage = async (imageFile) => {
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
-      }
+      },
     );
     return responce.data;
   } catch (error) {
-    console.error("Error uploading the image", error);
+    console.error("Error Uploading The Image", error);
     throw error;
   }
 };
