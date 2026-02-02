@@ -36,7 +36,7 @@ export const SIDE_MENU_DATA = [
     id: "05",
     label: "User",
     icon: LuUserPen,
-    path: "/update",
+    path: "/admin/update",
   },
   {
     id: "06",
@@ -69,7 +69,7 @@ export const SIDE_MENU_USER_DATA = [
     id: "05",
     label: "User",
     icon: LuUserPen,
-    path: "/update",
+    path: "/user/update",
   },
   {
     id: "06",

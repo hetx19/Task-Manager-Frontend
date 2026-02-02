@@ -55,7 +55,6 @@ const App = () => {
               path="/signup"
               element={<SignUpPage setProgress={setProgress} />}
             />
-            <Route path="/update" element={<UpdateUserPage />} />
 
             {/* Admin Routes */}
             <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
@@ -63,6 +62,10 @@ const App = () => {
               <Route path="/admin/tasks" element={<ManageTasksPage />} />
               <Route path="/admin/users" element={<ManageUsersPage />} />
               <Route path="/admin/new-task" element={<CreateTaskPage />} />
+              <Route
+                path="/admin/update"
+                element={<UpdateUserPage setProgress={setProgress} />}
+              />
             </Route>
 
             {/* User Routes */}
@@ -70,6 +73,10 @@ const App = () => {
               <Route path="/user/dashboard" element={<UserDashboardPage />} />
               <Route path="/user/tasks" element={<MyTasksPage />} />
               <Route path="/user/task/:id" element={<ViewTaskDetailsPage />} />
+              <Route
+                path="/user/update"
+                element={<UpdateUserPage setProgress={setProgress} />}
+              />
             </Route>
 
             {/* Default Routes */}

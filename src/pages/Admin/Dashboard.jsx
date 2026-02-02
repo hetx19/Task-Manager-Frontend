@@ -31,6 +31,11 @@ const AdminDashboardPage = () => {
 
   const navigate = useNavigate();
 
+  if (user?.role === "user") {
+    navigate("/user/dashboard");
+    return;
+  }
+
   const [adminDashboardData, setAdminDashboardData] = useState(null);
   const [pieChartData, setPieChartData] = useState([]);
   const [barGraphData, setBarGraphData] = useState([]);
@@ -81,7 +86,6 @@ const AdminDashboardPage = () => {
     return () => {};
   }, []);
 
-  console.log(barGraphData);
   return (
     <DashboardLayout activeMenu="Dashboard">
       <div className="card my-5">

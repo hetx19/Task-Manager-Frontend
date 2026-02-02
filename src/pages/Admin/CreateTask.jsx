@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { LuTrash2 } from "react-icons/lu";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -15,10 +15,14 @@ import axiosInst from "../../utils/axios";
 import { API_ENDPOINT } from "../../utils/api";
 import { PRIORITY_DATA } from "../../utils/data";
 
+// Context API's
+import { UserContext } from "../../context/userContext";
+
 const CreateTaskPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { taskId } = location.state || {};
+  const { user } = useContext(UserContext);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
