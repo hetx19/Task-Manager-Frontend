@@ -34,8 +34,6 @@ const SignUpPage = ({ setProgress }) => {
     setLoading(true);
     setProgress(0);
 
-    let profileImageUrl = "";
-
     if (!name) {
       setProgress(100);
       setLoading(false);
@@ -68,16 +66,11 @@ const SignUpPage = ({ setProgress }) => {
     setProgress(30);
 
     try {
-      if (profilePic) {
-        const imgUploadRes = await uploadImage(profilePic);
-        profileImageUrl = imgUploadRes.imageUrl || "";
-      }
-
       const response = await axiosInst.post(API_ENDPOINT.AUTH.SIGNUP, {
         name,
         email,
         password,
-        profileImageUrl,
+        profileImageUrl: "",
         adminInviteToken,
       });
 
@@ -87,6 +80,27 @@ const SignUpPage = ({ setProgress }) => {
 
       if (token) {
         localStorage.setItem("token", token);
+        axiosInst.defaults.headers.Authorization = `Bearer ${token}`;
+
+        if (profilePic) {
+          try {
+            const imgUploadRes = await uploadImage(profilePic);
+            const imageUrl = imgUploadRes.imageUrl || "";
+
+            if (imageUrl) {
+              await axiosInst.put(API_ENDPOINT.AUTH.UPDATE_USER, {
+                profileImageUrl: imageUrl,
+              });
+              if (response.data.user) {
+                response.data.user.profileImageUrl = imageUrl;
+              } else {
+                response.data.profileImageUrl = imageUrl;
+              }
+            }
+          } catch (error) {
+            console.log("Image upload failed", error);
+          }
+        }
         updateUser(response.data);
 
         navigate(role === "admin" ? "/admin/dashboard" : "/user/dashboard");

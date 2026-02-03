@@ -27,8 +27,8 @@ const User = ({ setProgress }) => {
 
   const navigate = useNavigate();
 
-  if (user?.role === "user") {
-    navigate("/user/dashboard");
+  if (user?.role === "admin") {
+    navigate("/admin/dashboard");
     return;
   }
 
@@ -180,17 +180,15 @@ const User = ({ setProgress }) => {
                   type="password"
                 />
               </div>
-              {user?.role === "user" && (
-                <div className="col-span-2">
-                  <Input
-                    value={adminInviteToken}
-                    onChange={({ target }) => setAdminInviteToken(target.value)}
-                    label="Admin Invite Token"
-                    placeholder="admin invite token"
-                    type="text"
-                  />
-                </div>
-              )}
+              <div className="col-span-2">
+                <Input
+                  value={adminInviteToken}
+                  onChange={({ target }) => setAdminInviteToken(target.value)}
+                  label="Admin Invite Token"
+                  placeholder="admin invite token"
+                  type="text"
+                />
+              </div>
             </div>
 
             {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}

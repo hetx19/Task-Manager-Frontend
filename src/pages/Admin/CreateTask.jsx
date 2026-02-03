@@ -1,9 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import moment from "moment";
 import toast from "react-hot-toast";
 import { LuTrash2 } from "react-icons/lu";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // Components
+import Modal from "../../components/Modal";
+import DeleteAlert from "../../components/DeleteAlert";
 import SelectUsers from "../../components/input/SelectUsers";
 import SelectDropdown from "../../components/input/SelectDropdown";
 import DashboardLayout from "../../components/layout/DashboardLayout";
@@ -83,7 +86,38 @@ const CreateTaskPage = () => {
     }
   };
 
-  const updateTask = async () => {};
+  const updateTask = async () => {
+    setLoading(true);
+
+    try {
+      const todoList = taskData.todoCheckList?.map((item) => {
+        const prevTodoCheckList = currentTask?.todoCheckList || [];
+        const matchedTask = prevTodoCheckList.find(
+          (prevItem) => prevItem.text === item,
+        );
+
+        return {
+          text: item,
+          completed: matchedTask ? matchedTask.completed : false,
+        };
+      });
+
+      const response = await axiosInst.put(
+        API_ENDPOINT.TASKS.UPDATE_TASK(taskId),
+        {
+          ...taskData,
+          dueDate: new Date(taskData.dueDate).toISOString(),
+          todoCheckList: todoList,
+        },
+      );
+
+      toast.success("Task Updated Successfully");
+    } catch (error) {
+      console.error("Task updation error", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async () => {
     setError(null);
@@ -117,9 +151,56 @@ const CreateTaskPage = () => {
     createTask();
   };
 
-  const getTaskById = async () => {};
+  const getTaskById = async () => {
+    try {
+      const response = await axiosInst.get(
+        API_ENDPOINT.TASKS.GET_TASK_BY_ID(taskId),
+      );
 
-  const deleteTask = async () => {};
+      if (response.data && response.data.task) {
+        const taskInfo = response.data.task;
+        setCurrentTask(taskInfo);
+
+        setTaskData((pervState) => ({
+          title: taskInfo.title,
+          description: taskInfo.description,
+          priority: taskInfo.priority,
+          dueDate: taskInfo.dueDate
+            ? moment(taskInfo.dueDate).format("YYYY-MM-DD")
+            : null,
+          assignedTo: taskInfo?.assignedTo?.map((item) => item._id) || [],
+          todoCheckList:
+            taskInfo?.todoCheckList?.map((item) => item?.text) || [],
+          attachments: taskInfo?.attachments || [],
+        }));
+      }
+    } catch (error) {
+      console.error("Task fetching error", error);
+    }
+  };
+
+  const deleteTask = async () => {
+    try {
+      await axiosInst.delete(API_ENDPOINT.TASKS.DELETE_TASK(taskId));
+
+      setOpenDeleteAlert(false);
+      toast.success("Task deleted successfully");
+      navigate("/admin/tasks");
+    } catch (error) {
+      console.error(
+        "Task deletion error",
+        error?.response?.data?.message || error.message,
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (taskId) {
+      getTaskById(taskId);
+    }
+
+    return () => {};
+  }, [taskId]);
 
   return (
     <DashboardLayout activeMenu="Create Task">
@@ -243,6 +324,17 @@ const CreateTaskPage = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={openDeleteAlert}
+        onClose={() => setOpenDeleteAlert(false)}
+        title="Delete Task"
+      >
+        <DeleteAlert
+          content="Are you sure you want to delete this task?"
+          onDelete={() => deleteTask()}
+        />
+      </Modal>
     </DashboardLayout>
   );
 };

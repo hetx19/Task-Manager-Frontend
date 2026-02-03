@@ -51,7 +51,7 @@ export const SIDE_MENU_USER_DATA = [
     id: "01",
     label: "Dashboard",
     icon: LuLayoutDashboard,
-    path: "/admin/dashboard",
+    path: "/user/dashboard",
   },
   {
     id: "02",
@@ -61,18 +61,12 @@ export const SIDE_MENU_USER_DATA = [
   },
   {
     id: "03",
-    label: "Logout",
-    icon: LuLogOut,
-    path: "logout",
-  },
-  {
-    id: "05",
     label: "User",
     icon: LuUserPen,
     path: "/user/update",
   },
   {
-    id: "06",
+    id: "04",
     label: "Logout",
     icon: LuLogOut,
     path: "logout",

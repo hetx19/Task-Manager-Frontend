@@ -15,7 +15,7 @@ export const API_ENDPOINT = {
   },
   TASKS: {
     GET_DASHBOARD_DATA: "/api/task/dashboard",
-    GET_USER_DASHBOARD_DATA: "/api/task/user-dashboard-data",
+    GET_USER_DASHBOARD_DATA: "/api/task/user-dashboard",
     GET_ALL_TASKS: "/api/task",
     GET_TASK_BY_ID: (taskID) => `/api/task/${taskID}`,
     CREATE_NEW_TASK: "/api/task",

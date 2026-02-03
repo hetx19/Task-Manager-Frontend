@@ -31,7 +31,8 @@ import MyTasksPage from "./pages/User/MyTasks";
 import ViewTaskDetailsPage from "./pages/User/ViewTaskDetails";
 
 // Update page
-import UpdateUserPage from "./pages/Update";
+import UpdateAdminUserPage from "./pages/Update/Admin";
+import UpdateUserPage from "./pages/Update/User";
 
 const App = () => {
   const [progress, setProgress] = React.useState(0);
@@ -64,7 +65,7 @@ const App = () => {
               <Route path="/admin/new-task" element={<CreateTaskPage />} />
               <Route
                 path="/admin/update"
-                element={<UpdateUserPage setProgress={setProgress} />}
+                element={<UpdateAdminUserPage setProgress={setProgress} />}
               />
             </Route>
 

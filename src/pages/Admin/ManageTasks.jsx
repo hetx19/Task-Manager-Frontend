@@ -30,9 +30,9 @@ const ManageTasksPage = () => {
 
       const statusArray = [
         { label: "All", count: statusSummary.all || 0 },
-        { label: "Pending", count: statusSummary.pendingTasks || 0 },
-        { label: "In Progress", count: statusSummary.inProgressTasks || 0 },
-        { label: "Completed", count: statusSummary.completedTasks || 0 },
+        { label: "Pending", count: statusSummary.pending || 0 },
+        { label: "In Progress", count: statusSummary.inProgress || 0 },
+        { label: "Completed", count: statusSummary.completed || 0 },
       ];
 
       setTabs(statusArray);
@@ -45,7 +45,27 @@ const ManageTasksPage = () => {
     navigate(`/admin/new-task`, { state: { taskId: taskData._id } });
   };
 
-  const handleDownloadReport = async () => {};
+  const handleDownloadReport = async () => {
+    try {
+      const response = await axiosInst.get(API_ENDPOINT.REPORT.TASKS_REPORT, {
+        responseType: "blob",
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "task_report.xlsx");
+
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Task report download error: ", error);
+      toast.error("Failed to download Task Report. Please try again.");
+    }
+  };
 
   useEffect(() => {
     getAllTasks(filterStatus);
