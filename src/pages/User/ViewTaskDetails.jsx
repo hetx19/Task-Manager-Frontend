@@ -197,20 +197,26 @@ const TodoCheckList = ({ text, isChecked, onChange }) => {
 };
 
 const Attachment = ({ link, index, onClick }) => {
+  const displayIndex = String(index + 1).padStart(2, "0");
+
   return (
-    <div
-      className="flex justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md mb-3 mt-2 cursor-pointer"
+    <button
+      type="button"
       onClick={onClick}
+      className="flex w-full items-center justify-between rounded-md border border-gray-100 bg-gray-50 px-3 py-2 mt-2 mb-3 text-left hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
     >
-      <div className="flex-1 flex items-center gap-3 border border-gray-100">
-        <span className="text-xs text-gray-400 font-semibold mr-2">
-          {index < 9 ? `0${index + 1}` : index + 1}
+      <div className="flex min-w-0 items-center gap-3">
+        <span className="text-xs font-semibold text-gray-400 shrink-0">
+          {displayIndex}
         </span>
 
-        <p className="text-xs text-black">{link}</p>
+        <p className="text-xs text-black truncate">{link}</p>
       </div>
 
-      <LuSquareArrowOutUpRight className="text-gray-400" />
-    </div>
+      <LuSquareArrowOutUpRight
+        className="text-gray-400 shrink-0"
+        aria-hidden="true"
+      />
+    </button>
   );
 };

@@ -132,7 +132,7 @@ const UserDashboardPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6">
         <div>
-          <div className="card">
+          <div className="card h-[380px]">
             <div className="flex items-center justify-between">
               <h5 className="text-medium">Task Distribution</h5>
             </div>
@@ -140,7 +140,7 @@ const UserDashboardPage = () => {
           </div>
         </div>
         <div>
-          <div className="card">
+          <div className="card h-[380px]">
             <div className="flex items-center justify-between">
               <h5 className="text-medium">Task Priority Levels</h5>
             </div>
