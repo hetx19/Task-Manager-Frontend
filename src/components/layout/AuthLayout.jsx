@@ -1,4 +1,5 @@
 import React from "react";
+import BG from "../../../public/bg.png";
 
 // Image
 import IMAGE from "../../assets/images/auth.png";
@@ -11,7 +12,10 @@ const AuthLayout = ({ children }) => {
         {children}
       </div>
 
-      <div className="hidden md:flex w-[40vw] h-screen items-center justify-center bg-blue-50 bg-[url('./bg.png')] bg-cover bg-no-repeat bg-center overflow-hidden p-8">
+      <div
+        style={{ backgroundImage: "url('/bg.png')" }}
+        className="hidden md:flex w-[40vw] h-screen items-center justify-center bg-blue-50 bg-cover bg-no-repeat bg-center overflow-hidden p-8"
+      >
         <img src={IMAGE} className="w-64 lg:w-[90%]" alt="iamge" />
       </div>
     </div>
