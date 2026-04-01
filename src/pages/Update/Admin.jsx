@@ -140,7 +140,7 @@ const User = ({ setProgress }) => {
     <DashboardLayout activeMenu={"User"}>
       <div className="my-5 mx-auto">
         <div className="lg:w-[100%] h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
-          <h3 className="text-xl font-semibold text-black">
+          <h3 className="text-xl font-semibold text-white">
             Update My Details
           </h3>
 

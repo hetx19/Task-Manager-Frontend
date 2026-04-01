@@ -3,13 +3,13 @@ import React from "react";
 const BarCustomToolTip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white shadow-md rounded-lg p-2 border border-gray-300">
-        <p className="text-xs font-semibold mb-1 text-purple-800">
-          {payload[0]?.payload.priority}
+      <div className="bg-slate-800/90 backdrop-blur-md shadow-2xl rounded-lg p-3 border border-white/10 text-white">
+        <p className="text-xs uppercase tracking-wider font-semibold mb-1 text-slate-400">
+          {payload[0]?.payload.priority} Priority
         </p>
-        <p className="text-sm text-gray-600">
-          Count:{" "}
-          <span className="text-sm font-medium text-gray-900">
+        <p className="text-[13px] text-slate-300">
+          Tasks:{" "}
+          <span className="text-[13px] font-bold text-white">
             {payload[0]?.payload.count}
           </span>
         </p>

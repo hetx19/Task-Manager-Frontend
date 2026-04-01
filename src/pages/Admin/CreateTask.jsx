@@ -3,6 +3,7 @@ import moment from "moment";
 import toast from "react-hot-toast";
 import { LuTrash2 } from "react-icons/lu";
 import { useLocation, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 // Components
 import Modal from "../../components/Modal";
@@ -204,16 +205,20 @@ const CreateTaskPage = () => {
 
   return (
     <DashboardLayout activeMenu="Create Task">
-      <div className="mt-5">
-        <div className="grid grid-cols-1 md:grid-cols-4 mt-4">
-          <div className="form-card col-span-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl md:text-xl font-medium">
+      <motion.div 
+        initial={{ opacity: 0, y: 15 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        className="mt-5 max-w-5xl mx-auto"
+      >
+        <div className="grid grid-cols-1 mt-4">
+          <div className="form-card w-full">
+            <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
+              <h2 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-violet-400 to-indigo-400">
                 {taskId ? "Update Task" : "Create Task"}
               </h2>
               {taskId && (
                 <button
-                  className="flex items-center gap-1.5 text-[13px] font-medium text-red-500 bg-rose-50 rounded px-2 py-1 border border-rose-100 hover:border-rose-300 cursor-pointer"
+                  className="flex items-center gap-1.5 text-[13px] font-medium text-rose-400 bg-rose-500/10 rounded-lg px-3 py-1.5 border border-rose-500/20 hover:border-rose-500/50 hover:bg-rose-500/20 transition-colors"
                   onClick={() => setOpenDeleteAlert(true)}
                 >
                   <LuTrash2 className="text-base" />
@@ -221,100 +226,108 @@ const CreateTaskPage = () => {
                 </button>
               )}
             </div>
-            <div className="mt-4">
-              <label className="text-xs font-medium text-slate-600">
-                Task Title
-              </label>
-              <input
-                placeholder="Create App UI"
-                className="form-input "
-                value={taskData.title}
-                onChange={({ target }) =>
-                  handleValueChange("title", target.value)
-                }
-              />
-            </div>
-            <div className="mt-3">
-              <label className="text-xs font-medium text-slate-600">
-                Description
-              </label>
-              <textarea
-                placeholder="Describe Task"
-                className="form-input "
-                rows={4}
-                value={taskData.description}
-                onChange={({ target }) =>
-                  handleValueChange("description", target.value)
-                }
-              />
-            </div>
-            <div className="grid grid-cols-12 gap-4 mt-2">
-              <div className="col-span-6 md:col-span-4">
-                <label className="text-xs font-medium text-slate-600">
-                  Priority
-                </label>
-                <SelectDropdown
-                  options={PRIORITY_DATA}
-                  value={taskData.priority}
-                  onChange={(value) => handleValueChange("priority", value)}
-                  placeholder="Select Priority"
-                />
-              </div>
-              <div className="col-span-6 md:col-span-4">
-                <label className="text-xs font-medium text-slate-600">
-                  Due Date
+            
+            <div className="space-y-5">
+              <div>
+                <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">
+                  Task Title
                 </label>
                 <input
-                  placeholder="Due Date"
+                  placeholder="e.g. Redesign Dashboard UI"
                   className="form-input"
-                  value={taskData.dueDate}
+                  value={taskData.title}
                   onChange={({ target }) =>
-                    handleValueChange("dueDate", target.value)
+                    handleValueChange("title", target.value)
                   }
-                  type="date"
                 />
               </div>
-              <div className="col-span-12 md:col-span-3">
-                <label className="text-xs font-medium text-slate-600">
-                  Assign To
+
+              <div>
+                <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">
+                  Description
                 </label>
-                <SelectUsers
-                  selectedUsers={taskData.assignedTo}
-                  setSelectedUsers={(value) => {
-                    handleValueChange("assignedTo", value);
-                  }}
+                <textarea
+                  placeholder="Describe the main objectives..."
+                  className="form-input resize-none"
+                  rows={4}
+                  value={taskData.description}
+                  onChange={({ target }) =>
+                    handleValueChange("description", target.value)
+                  }
                 />
               </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-5">
+                <div className="md:col-span-4 flex flex-col justify-end">
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">
+                    Priority
+                  </label>
+                  <SelectDropdown
+                    options={PRIORITY_DATA}
+                    value={taskData.priority}
+                    onChange={(value) => handleValueChange("priority", value)}
+                    placeholder="Select Priority"
+                  />
+                </div>
+                <div className="md:col-span-4 flex flex-col justify-end">
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">
+                    Due Date
+                  </label>
+                  <input
+                    className="form-input !mt-0 h-[46px] [color-scheme:dark]"
+                    value={taskData.dueDate || ""}
+                    onChange={({ target }) =>
+                      handleValueChange("dueDate", target.value)
+                    }
+                    type="date"
+                  />
+                </div>
+                <div className="md:col-span-4 flex flex-col justify-end">
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">
+                    Assign To
+                  </label>
+                  <SelectUsers
+                    selectedUsers={taskData.assignedTo}
+                    setSelectedUsers={(value) => {
+                      handleValueChange("assignedTo", value);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+                <div>
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 block border-t border-white/5 pt-4">
+                    Todo Checklist
+                  </label>
+                  <TodoCheckListInput
+                    todoList={taskData?.todoCheckList}
+                    setTodoList={(value) => {
+                      handleValueChange("todoCheckList", value);
+                    }}
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 block border-t border-white/5 pt-4">
+                    Add Attachments
+                  </label>
+                  <AddAttachmentsInput
+                    attachments={taskData?.attachments}
+                    setAttachments={(value) => {
+                      handleValueChange("attachments", value);
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="mt-3">
-              <label className="text-xs font-medium text-slate-600">
-                Todo Checklist
-              </label>
-              <TodoCheckListInput
-                todoList={taskData?.todoCheckList}
-                setTodoList={(value) => {
-                  handleValueChange("todoCheckList", value);
-                }}
-              />
-            </div>
-            <div className="mt-3">
-              <label className="text-xs font-medium text-slate-600">
-                Add Attachments
-              </label>
-              <AddAttachmentsInput
-                attachments={taskData?.attachments}
-                setAttachments={(value) => {
-                  handleValueChange("attachments", value);
-                }}
-              />
-            </div>
+
             {error && (
-              <p className="text-xs font-medium text-red-500 mt-5">{error}</p>
+              <p className="text-xs font-medium text-rose-400 mt-5 bg-rose-500/10 p-2 rounded-md border border-rose-500/20">{error}</p>
             )}
 
-            <div className="flex justify-end mt-7">
+            <div className="flex justify-end mt-8 border-t border-white/5 pt-5">
               <button
-                className="add-btn"
+                className="btn-primary w-auto px-8"
                 onClick={handleSubmit}
                 disabled={loading}
               >
@@ -323,7 +336,7 @@ const CreateTaskPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <Modal
         isOpen={openDeleteAlert}

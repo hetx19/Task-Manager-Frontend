@@ -119,15 +119,15 @@ const SignUpPage = ({ setProgress }) => {
 
   return (
     <AuthLayout>
-      <div className="lg:w-[100%] h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black">Create an Account</h3>
-        <p className="text-xs text-slate-700 mt-[5px] mb-6">
+      <div className="w-full flex flex-col justify-center">
+        <h3 className="text-3xl font-bold text-white tracking-tight text-center">Create an Account</h3>
+        <p className="text-sm text-slate-400 mt-[5px] mb-6 text-center">
           Join us today by entering your details
         </p>
 
-        <form onSubmit={handleSignup}>
+        <form onSubmit={handleSignup} className="bg-slate-900/50 p-6 rounded-2xl border border-white/5 backdrop-blur-md shadow-xl w-full">
           <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <Input
               value={name}
               onChange={({ target }) => setName(target.value)}
@@ -157,26 +157,26 @@ const SignUpPage = ({ setProgress }) => {
               type="password"
             />
 
-            <div className="col-span-2">
+            <div className="col-span-1 md:col-span-2">
               <Input
                 value={adminInviteToken}
                 onChange={({ target }) => setAdminInviteToken(target.value)}
-                label="Admin Token"
-                placeholder="Token"
+                label="Admin Token (Optional)"
+                placeholder="Token for Admin setup"
                 type="text"
               />
             </div>
           </div>
 
-          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+          {error && <p className="text-rose-400 text-xs pb-2.5 bg-rose-500/10 p-2 rounded border border-rose-500/20 mt-2">{error}</p>}
 
-          <button disabled={loading} type="submit" className="btn-primary">
+          <button disabled={loading} type="submit" className="btn-primary w-full mt-6">
             Sign Up
           </button>
 
-          <p className="text-[13px] text-slate-800 mt-3">
+          <p className="text-[13px] text-slate-400 mt-5 text-center">
             Already have an account?{" "}
-            <Link className="font-medium text-primary underline" to="/signin">
+            <Link className="font-medium text-violet-400 hover:text-violet-300 underline transition-colors" to="/signin">
               SignIn
             </Link>
           </p>

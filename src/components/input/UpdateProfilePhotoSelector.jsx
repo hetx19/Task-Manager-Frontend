@@ -35,7 +35,7 @@ const UpdateProfilePhotoSelector = ({ image, setImage }) => {
       />
 
       {!image ? (
-        <div className="w-20 h-20 flex items-center justify-center bg-blue-100/50 rounded-full relative">
+        <div className="w-20 h-20 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full relative shadow-lg">
           <LuUser className="text-4xl text-primary" />
           <button
             type="button"

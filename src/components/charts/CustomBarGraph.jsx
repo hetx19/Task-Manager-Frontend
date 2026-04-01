@@ -17,28 +17,29 @@ const CustomBarGraph = ({ data }) => {
   const getBarColor = (entry) => {
     switch (entry?.priority) {
       case "Low":
-        return "#00BC7D";
+        return "#10b981"; // emerald-500
       case "Medium":
-        return "#FE9900";
+        return "#f59e0b"; // amber-500
       case "High":
-        return "#FF1F77";
+        return "#f43f5e"; // rose-500
       default:
-        return "#00BC7D";
+        return "#10b981";
     }
   };
 
   return (
-    <div className="bg-white mt-6">
+    <div className="mt-6 w-[100%]">
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <CartesianGrid stroke="none" />
 
           <XAxis
             dataKey="priority"
-            tick={{ fontSize: 12, fill: "#555" }}
+            tick={{ fontSize: 13, fill: "#94a3b8", fontWeight: 500 }}
             stroke="none"
+            dy={10}
           />
-          <YAxis tick={{ fontSize: 12, fill: "#555" }} stroke="none" />
+          <YAxis tick={{ fontSize: 13, fill: "#94a3b8", fontWeight: 500 }} stroke="none" dx={-10} />
 
           <Tooltip
             content={<BarCustomToolTip />}
@@ -48,8 +49,8 @@ const CustomBarGraph = ({ data }) => {
           <Bar
             dataKey="count"
             nameKey="priority"
-            fill="#FF8042"
-            radius={[10, 10, 0, 0]}
+            radius={[6, 6, 0, 0]}
+            barSize={40}
           >
             {data?.map((entry, index) => (
               <Cell key={index} fill={getBarColor(entry)} />

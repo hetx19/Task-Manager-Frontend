@@ -23,7 +23,7 @@ const AvatarGroup = ({
         return (
           <div
             key={key}
-            className="rounded-full border-2 border-white relative bg-white"
+            className="rounded-full border-2 border-slate-900 relative bg-slate-800"
             style={{
               width: size,
               height: size,
@@ -42,7 +42,7 @@ const AvatarGroup = ({
                 name={name}
                 width="w-full"
                 height="h-full"
-                style="text-[10px]"
+                style="text-[10px] border-none"
               />
             )}
           </div>
@@ -57,7 +57,7 @@ const AvatarGroup = ({
             marginLeft: -overlap,
             zIndex: 0,
           }}
-          className="flex items-center justify-center rounded-full border-2 border-white bg-blue-50 text-sm font-medium text-blue-700"
+          className="flex items-center justify-center rounded-full border-2 border-slate-900 bg-slate-800 text-xs font-semibold text-slate-300"
           aria-label={`${remainingCount} more users`}
         >
           +{remainingCount}

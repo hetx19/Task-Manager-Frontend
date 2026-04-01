@@ -21,10 +21,12 @@ const CustomPieChart = ({ data, colors }) => {
           dataKey="count"
           nameKey="status"
           cx="50%"
-          cy="50%"
-          outerRadius={120}
-          innerRadius={90}
+          cy="45%"
+          outerRadius={95}
+          innerRadius={65}
           labelLine={false}
+          stroke="#0f172a"
+          strokeWidth={4}
         >
           {data.map((entry, index) => (
             <Cell
@@ -34,7 +36,7 @@ const CustomPieChart = ({ data, colors }) => {
           ))}
         </Pie>
         <Tooltip content={<CustomToopTip />} />
-        <Legend content={<CustomLegend />} />
+        <Legend content={<CustomLegend />} verticalAlign="bottom" />
       </PieChart>
     </ResponsiveContainer>
   );
